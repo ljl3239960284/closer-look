@@ -69,16 +69,24 @@ photography.forEach((series, index) => {
   bookmark.querySelector('.bookmark-title').textContent = series.title;
   bookmark.querySelector('.bookmark-count').textContent = numberLabel(series.total) + ' photographs';
   if (hasPhotos) {
-    const cover = loadPhoto('gallery-media/' + series.id + '-cover.jpg', '');
-    bookmark.querySelector('.bookmark-cover').append(cover);
+    const frame = bookmark.querySelector('.bookmark-cover');
+    frame.classList.add('has-image');
+    const cover = loadPhoto('gallery-media/' + series.id + '-cover.jpg', '', () => frame.classList.remove('has-image'));
+    cover.draggable = false;
+    frame.append(cover);
   }
 
-  let pointerType = '';
-  bookmark.addEventListener('pointerdown', event => { pointerType = event.pointerType; });
-  bookmark.addEventListener('pointercancel', () => { pointerType = ''; });
+  let press = null;
+  bookmark.addEventListener('pointerdown', event => {
+    press = { type: event.pointerType, x: event.clientX, y: event.clientY };
+  });
+  bookmark.addEventListener('pointercancel', () => { press = null; });
   bookmark.addEventListener('click', event => {
-    const tapped = event.detail > 0 && (pointerType === 'touch' || pointerType === 'pen');
-    pointerType = '';
+    const tapped = event.detail > 0 && (press?.type === 'touch' || press?.type === 'pen');
+    const dragged = event.detail > 0 && press?.type === 'mouse'
+      && Math.hypot(event.clientX - press.x, event.clientY - press.y) > 8;
+    press = null;
+    if (dragged) return;
     if (tapped && previewed !== bookmark) {
       clearPreview();
       previewed = bookmark;

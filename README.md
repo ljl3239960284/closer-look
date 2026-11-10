@@ -2,8 +2,8 @@
 
 A fullscreen photography and motion portfolio built with HTML, CSS and JavaScript.
 
-- On desktop, hover over a bookmark to reveal a frosted-glass preview and click to open the series.
-- On touch devices, the bookmarks stack vertically. Tap once to preview and again to open.
+- The bookmarks start as numbered frosted-glass panels. On desktop, move the pointer over a panel to reveal its cover, then click to open the series.
+- On touch devices, the bookmarks stack vertically. Tap once to reveal the cover and again to open.
 - Inside a series, scroll through the individual photographs. Close the series with Escape or the close button.
 - The interface respects reduced-motion preferences.
 
