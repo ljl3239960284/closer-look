@@ -13,13 +13,11 @@ body{margin:0;color:var(--ink);font:400 16px/1.4 system-ui,sans-serif}
 button,a{color:inherit}
 a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 .screen{position:relative;isolation:isolate;display:grid;height:100vh;height:100svh;overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always}
-.motion{background:radial-gradient(ellipse at 69% 66%,#a84f9f,transparent 61%),linear-gradient(155deg,#17142c,#3d277c)}
 .home{background:radial-gradient(ellipse at 82% 79%,#bd4f88,transparent 57%),linear-gradient(125deg,#211153 15%,#462da7 58%,#6652bd)}
 .home::before{content:"";position:absolute;inset:0;background:linear-gradient(#fff2 1px,transparent 1px),linear-gradient(90deg,#fff2 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(130deg,transparent 25%,black)}
 .overlay{opacity:0;transform:translateY(7px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
 .screen.is-revealed .overlay,.caption:hover,.caption:focus-within{opacity:1;transform:none}
 .caption{position:absolute;z-index:1;top:max(3.5rem,9%);left:clamp(1.4rem,6vw,7rem);padding:.75rem 1rem .9rem;text-shadow:0 2px 14px #180c29,0 1px 5px #180c29;max-width:calc(100% - 3rem)}
-.caption button{display:block;background:none;border:0;padding:0;text-align:left;cursor:pointer}
 .caption small,.wordmark{font:600 .69rem/1.4 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.19em}
 .caption h1,.caption h2{margin:.28em 0 0;font:500 clamp(2rem,5.4vw,5.8rem)/.93 system-ui,sans-serif;letter-spacing:-.075em}
 .top{position:fixed;inset:0 0 auto;z-index:3;padding:.65rem clamp(1rem,4vw,4rem) .5rem;min-height:2.6rem}
@@ -28,28 +26,20 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 .top nav{display:flex;gap:clamp(.65rem,3vw,2rem);font-size:.85rem}
 .top a{text-decoration:none}
 .top a:hover{text-decoration:underline;text-underline-offset:.3em}
-.menu,.hint{position:absolute;display:grid;place-items:center;cursor:pointer;border:1px solid #fff6;border-radius:50%;background:#181024b3}
-.menu{display:none;right:1rem;top:.6rem;width:2.35rem;height:2.35rem;z-index:1}
-.hint{left:50%;bottom:1.2rem;translate:-50% 0;width:2.8rem;height:2.8rem;text-decoration:none;font-size:1.3rem;transition:transform .2s}
-.hint:hover{transform:translateY(4px)}
+.menu{position:absolute;display:none;place-items:center;right:1rem;top:.6rem;width:2.35rem;height:2.35rem;z-index:1;cursor:pointer;border:1px solid;border-radius:50%}
+.hint{position:absolute;left:50%;bottom:max(1.4rem,env(safe-area-inset-bottom));translate:-50% 0;display:inline-flex;align-items:center;gap:.75rem;min-height:2.75rem;padding:.55rem 1rem;border:1px solid #f3e5ff35;border-radius:2rem;background:#1e113c54;color:#f0e4f4;font-size:.8rem;letter-spacing:.08em;text-decoration:none;white-space:nowrap;transition:background .25s,transform .25s}
+.hint:hover,.hint:focus-visible{background:#241447a0;transform:translateY(-2px)}
 .lens{position:absolute;top:50%;left:61%;width:clamp(7rem,26vw,24rem);aspect-ratio:1;translate:-50% -50%;border-radius:50%;border:1px solid #fff9;box-shadow:inset 0 0 40px #ffd4ef82,0 20px 60px #20082c60;backdrop-filter:hue-rotate(23deg) brightness(1.17);pointer-events:none}
 @media (max-width:620px){.caption{top:4rem}.top-bar{padding-right:3.25rem}.wordmark{font-size:.58rem}}
 @media (hover:none){.menu{display:grid}.top-bar{padding-right:3.25rem}.top:not(.is-open) .top-bar{visibility:hidden}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.overlay,.hint,.top-bar{transition:none}}
 /* Tinted type and glass pick up their colours from the artwork. */
 .screen{--title:#e4d5ef;--label:#d2bddf;--type-shadow:#33203f80}
-.motion{--title:#e6d4e7;--label:#d5bddb}
 .caption{color:var(--title);text-shadow:0 1px 12px var(--type-shadow)}
 .caption small{color:var(--label);font-weight:500;letter-spacing:.22em}
 .caption h1,.caption h2{font-weight:400;line-height:1.04;letter-spacing:.012em}
 .top-bar{color:#ddd0e6;background:#261d37a3;border-color:#e5d5ee28;backdrop-filter:blur(14px)}
 .menu{color:#ddd0e6;background:#261d3766;border-color:#e5d5ee36}
-.hint{opacity:0;color:#e7d1edbd;border-color:transparent;background:transparent;transform:translateY(-5px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
-.hint::before{content:"";position:absolute;inset:-.9rem -2rem}
-.hint:hover,.hint:focus-visible{opacity:1;transform:none}
-@media (hover:none){.hint{opacity:.62;transform:none}}
-
-@media (prefers-reduced-motion:reduce){.hint{transition:none}}
 </style>
 <link rel="stylesheet" href="gallery.css">
 </head>
@@ -62,7 +52,7 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 <section class="screen home is-revealed" id="home" aria-labelledby="home-title">
 <div class="lens" aria-hidden="true"></div>
 <div class="caption overlay"><small>Image &amp; motion</small><h1 id="home-title">Closer Look</h1></div>
-<a class="hint" href="#images" aria-label="Scroll to images">↓</a>
+<a class="hint" href="#images">View work <span aria-hidden="true">↓</span></a>
 </section>
 <section class="screen images" id="images" aria-labelledby="images-title">
 <h2 class="sr-only" id="images-title">Photography series</h2>
@@ -70,7 +60,21 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 <noscript>Enable JavaScript to browse the photography series.</noscript>
 </section>
 <section class="screen motion" id="video" aria-labelledby="video-title">
-<div class="caption overlay"><button type="button" aria-label="Show Motion Studies labels"><small>Video / Sample</small></button><h2 id="video-title">Motion Studies</h2></div>
+<div class="motion-work">
+<div class="motion-copy">
+<p class="motion-kicker">Motion / 01</p>
+<h2 id="video-title">Passing Light</h2>
+<p>A quiet passage from ridge to harbour to park, made from photographs in the collection.</p>
+</div>
+<div class="motion-frame">
+<video id="motion-film" controls playsinline preload="metadata" aria-label="Passing Light, a silent motion study" data-src="gallery-media/passing-light.mp4" data-poster="gallery-media/passing-light.jpg" hidden></video>
+<div class="motion-placeholder" aria-hidden="true"></div>
+</div>
+</div>
+<footer class="author">
+<div><strong>Fabio</strong><span>Photography &amp; Motion</span></div>
+<a href="https://github.com/ljl3239960284">GitHub ↗</a>
+</footer>
 </section>
 </main>
 <dialog id="series" class="series" aria-labelledby="series-title">
@@ -79,6 +83,11 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 <form method="dialog"><button type="submit" aria-label="Back to photography series" autofocus>×</button></form>
 </header>
 <div class="series-scroll"></div>
+<nav class="series-pagination" aria-label="Photograph navigation">
+<button type="button" class="series-previous" aria-label="Previous photograph" aria-disabled="true">←</button>
+<span class="series-position" aria-live="polite"></span>
+<button type="button" class="series-next" aria-label="Next photograph">→</button>
+</nav>
 </dialog>
 <template id="bookmark-template">
 <button class="bookmark" type="button" aria-haspopup="dialog" aria-controls="series">
@@ -88,13 +97,14 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 <span class="bookmark-title"></span>
 <span class="bookmark-count"></span>
 <span class="bookmark-enter" aria-hidden="true">↗</span>
+<span class="bookmark-open" aria-hidden="true">Open series ↗</span>
 </span>
 </button>
 </template>
 <script src="photo-mode.js" defer></script>
 <script src="gallery.js" defer></script>
 <script>
-const screens = document.querySelectorAll('.screen');
+const screens = document.querySelectorAll('.home');
 const timers = new Map();
 
 function reveal(screen) {
@@ -119,7 +129,6 @@ const observer = new IntersectionObserver(entries => {
 
 screens.forEach(screen => {
   observer.observe(screen);
-  screen.querySelector('.caption button')?.addEventListener('click', () => reveal(screen));
   screen.addEventListener('click', event => {
     if (matchMedia('(hover: none)').matches && !event.target.closest('a, button')) reveal(screen);
   });

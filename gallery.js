@@ -1,9 +1,9 @@
 const photography = [
-  { id: 'landscape', title: 'Landscape', total: 2, desktopCover: 2 },
-  { id: 'architecture', title: 'Architecture', total: 3, desktopCover: 2 },
-  { id: 'portrait', title: 'Portrait', total: 3, desktopCover: 1 },
-  { id: 'abstraction', title: 'Abstraction', total: 2, desktopCover: 1 },
-  { id: 'others', title: 'Other Works', total: 2, desktopCover: 2 },
+  { id: 'landscape', title: 'Landscape', order: [2, 1], desktopCover: 2 },
+  { id: 'architecture', title: 'Architecture', order: [2, 1, 3], desktopCover: 2 },
+  { id: 'portrait', title: 'Portrait', order: [1, 2, 3], desktopCover: 1 },
+  { id: 'abstraction', title: 'Abstraction', order: [1, 2], desktopCover: 1 },
+  { id: 'others', title: 'Other Works', order: [2, 1], desktopCover: 2 },
 ];
 
 const bookmarks = document.querySelector('.bookmarks');
@@ -11,9 +11,21 @@ const bookmarkTemplate = document.querySelector('#bookmark-template');
 const gallery = document.querySelector('#series');
 const galleryTitle = gallery.querySelector('#series-title');
 const galleryScroll = gallery.querySelector('.series-scroll');
+const galleryPosition = gallery.querySelector('.series-position');
+const previousPhoto = gallery.querySelector('.series-previous');
+const nextPhoto = gallery.querySelector('.series-next');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const hasPhotos = window.portfolioHasPhotos === true;
+const film = document.querySelector('#motion-film');
+if (hasPhotos && film) {
+  film.poster = film.dataset.poster;
+  film.src = film.dataset.src;
+  film.hidden = false;
+  document.querySelector('.motion-placeholder').hidden = true;
+}
 let previewed = null;
 let openedFrom = null;
+let currentPhoto = 0;
 
 function numberLabel(number) {
   return String(number).padStart(2, '0');
@@ -36,6 +48,27 @@ function clearPreview() {
   previewed = null;
 }
 
+function updatePagination() {
+  const height = galleryScroll.clientHeight;
+  const total = galleryScroll.childElementCount;
+  if (!height || !total) return;
+  currentPhoto = Math.max(0, Math.min(total - 1, Math.round(galleryScroll.scrollTop / height)));
+  const position = numberLabel(currentPhoto + 1) + ' / ' + numberLabel(total);
+  if (galleryPosition.textContent !== position) galleryPosition.textContent = position;
+  previousPhoto.setAttribute('aria-disabled', String(currentPhoto === 0));
+  nextPhoto.setAttribute('aria-disabled', String(currentPhoto === total - 1));
+}
+
+function movePhoto(direction) {
+  const target = galleryScroll.children[currentPhoto + direction];
+  if (!target) return;
+  galleryScroll.scrollTo({ top: target.offsetTop, behavior: reducedMotion.matches ? 'auto' : 'smooth' });
+}
+
+galleryScroll.addEventListener('scroll', updatePagination, { passive: true });
+previousPhoto.addEventListener('click', () => movePhoto(-1));
+nextPhoto.addEventListener('click', () => movePhoto(1));
+
 function openSeries(series, bookmark) {
   clearPreview();
   openedFrom = bookmark;
@@ -43,23 +76,25 @@ function openSeries(series, bookmark) {
   galleryTitle.textContent = series.title;
   galleryScroll.replaceChildren();
 
-  for (let i = 1; i <= series.total; i++) {
-    const label = numberLabel(i);
+  series.order.forEach((photoNumber, index) => {
+    const label = numberLabel(index + 1);
     const piece = document.createElement('figure');
     piece.className = 'series-photo' + (hasPhotos ? '' : ' sample');
     const caption = document.createElement('figcaption');
-    caption.textContent = label + ' / ' + numberLabel(series.total);
+    caption.className = 'sr-only';
+    caption.textContent = label + ' / ' + numberLabel(series.order.length);
     if (hasPhotos) {
-      const file = 'gallery-media/' + series.id + '-' + label + '.jpg';
+      const file = 'gallery-media/' + series.id + '-' + numberLabel(photoNumber) + '.jpg';
       const photo = loadPhoto(file, series.title + ' photograph ' + label, () => piece.classList.add('sample'));
-      photo.loading = i === 1 ? 'eager' : 'lazy';
+      photo.loading = index === 0 ? 'eager' : 'lazy';
       piece.append(photo);
     }
     piece.append(caption);
     galleryScroll.append(piece);
-  }
+  });
   gallery.showModal();
   galleryScroll.scrollTop = 0;
+  updatePagination();
 }
 
 photography.forEach((series, index) => {
@@ -67,7 +102,7 @@ photography.forEach((series, index) => {
   bookmark.classList.add(series.id);
   bookmark.querySelector('.bookmark-number').textContent = numberLabel(index + 1);
   bookmark.querySelector('.bookmark-title').textContent = series.title;
-  bookmark.querySelector('.bookmark-count').textContent = numberLabel(series.total) + ' photographs';
+  bookmark.querySelector('.bookmark-count').textContent = numberLabel(series.order.length) + ' photographs';
   if (hasPhotos) {
     const frame = bookmark.querySelector('.bookmark-cover');
     const picture = document.createElement('picture');
