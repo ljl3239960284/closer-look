@@ -43,6 +43,24 @@ figcaption{position:absolute;left:clamp(1rem,4vw,4rem);bottom:clamp(1rem,4vw,4re
 @media (max-width:620px){.artworks{grid-template-columns:1fr;grid-template-rows:repeat(2,minmax(0,1fr))}.art::before{background-size:cover}.caption{top:4rem}.top-bar{padding-right:3.25rem}.wordmark{font-size:.58rem}}
 @media (hover:none){.menu{display:grid}.top-bar{padding-right:3.25rem}.top:not(.is-open) .top-bar{visibility:hidden}}
 @media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.overlay,.hint,.top-bar{transition:none}}
+/* Tinted type and glass pick up their colours from the artwork. */
+.screen{--title:#e4d5ef;--label:#d2bddf;--type-shadow:#33203f80}
+.earth{--title:#f2dac7;--label:#eac5aa;--type-shadow:#48261e91}
+.motion{--title:#e6d4e7;--label:#d5bddb}
+.caption,figcaption{color:var(--title);text-shadow:0 1px 12px var(--type-shadow)}
+.caption small,figcaption small{color:var(--label);font-weight:500;letter-spacing:.22em}
+.caption h1,.caption h2{font-weight:400;line-height:1.04;letter-spacing:.012em}
+figcaption{letter-spacing:.065em;font-weight:400}
+.top-bar{color:#ddd0e6;background:#261d37a3;border-color:#e5d5ee28;backdrop-filter:blur(14px)}
+.menu{color:#ddd0e6;background:#261d3766;border-color:#e5d5ee36}
+.hint{opacity:0;color:#e7d1edbd;border-color:transparent;background:transparent;transform:translateY(-5px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
+.hint::before{content:"";position:absolute;inset:-.9rem -2rem}
+.hint:hover,.hint:focus-visible{opacity:1;transform:none}
+@media (hover:none){.hint{opacity:.62;transform:none}}
+.violet-glass{position:absolute;inset:0 auto 0 0;width:45%;z-index:0;pointer-events:none;opacity:0;transform:translateX(-105%);background:linear-gradient(90deg,#d7bde92b,#d7bde922 55%,transparent);backdrop-filter:blur(19px) saturate(.83);mask-image:linear-gradient(90deg,#000 0 69%,transparent 100%);transition:transform .95s var(--ease),opacity .65s var(--ease)}
+#images.is-revealed .violet-glass,#images:has(.caption:hover,.caption:focus-within) .violet-glass{opacity:1;transform:none}
+@media (max-width:620px){.violet-glass{width:72%;height:50%}}
+@media (prefers-reduced-motion:reduce){.hint,.violet-glass{transition:none}}
 </style>
 </head>
 <body>
@@ -61,6 +79,7 @@ figcaption{position:absolute;left:clamp(1rem,4vw,4rem);bottom:clamp(1rem,4vw,4re
 <figure class="art halo"><figcaption class="overlay"><small>01 / Sample</small><br>Halo</figcaption></figure>
 <figure class="art orbit"><figcaption class="overlay"><small>02 / Sample</small><br>Orbit</figcaption></figure>
 </div>
+<div class="violet-glass" aria-hidden="true"></div>
 <div class="caption overlay"><button type="button" aria-label="Show Violet Studies labels"><small>Images / 01</small></button><h2 id="violet-title">Violet Studies</h2></div>
 </section>
 <section class="screen earth" id="earth" aria-labelledby="earth-title">
