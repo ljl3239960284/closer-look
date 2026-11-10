@@ -299,14 +299,17 @@ html:has(.series[open]) { overflow: hidden; }
   }
   .bookmark {
     --edge: clamp(.85rem, 5vw, 2.5rem);
-    --closed-preview: inset(100% 0 0);
     border-inline-end: 0;
     border-block-end: 1px solid #eee7f01d;
   }
-  .bookmark-cover { inset: .55rem var(--edge) .55rem 48%; }
-  .bookmark-cover img { object-fit: contain; object-position: center right; }
-  .bookmark-cover::after { content: none; }
-  .bookmark-label { inset: auto 53% 50% var(--edge); transform: translateY(50%); gap: .28rem; opacity: 1; }
+  .bookmark.landscape { --mobile-cover-focus: 50% 45%; }
+  .bookmark.architecture { --mobile-cover-focus: 50% 25%; }
+  .bookmark.portrait { --mobile-cover-focus: 50% 67%; }
+  .bookmark.abstraction { --mobile-cover-focus: 50% 40%; }
+  .bookmark.others { --mobile-cover-focus: 50% 57%; }
+  .bookmark-cover img { object-fit: cover; object-position: var(--mobile-cover-focus); }
+  .bookmark-cover::after { background: linear-gradient(180deg, transparent 24%, #18141d38 50%, #17131cb8 100%); }
+  .bookmark-label { gap: .28rem; }
   .bookmark-number { font-size: clamp(1.85rem, 8vw, 3.5rem); }
   .bookmark-title { font-size: clamp(.85rem, 4.1vw, 1.3rem); }
   .bookmark-count { font-size: .55rem; }
