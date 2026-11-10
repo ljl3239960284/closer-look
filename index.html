@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Closer Look — Portfolio</title>
+<meta name="description" content="A portfolio concept for computer science and creative web work.">
+<style>
+:root{color-scheme:light;--paper:#f7f4ea;--ink:#191914;--line:#24241f33;--blue:#24136b}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,sans-serif}a{color:inherit}a:focus-visible,button:focus-visible{outline:3px solid #432bd3;outline-offset:5px}.wrap{width:min(1370px,92%);margin:auto}header,footer,.section-label{display:flex;justify-content:space-between;align-items:center;gap:1rem;padding:1rem 0;border-bottom:1px solid var(--line)}nav{display:flex;gap:clamp(.6rem,2vw,2rem)}.stamp,.eyebrow,.section-label,.meta{font:600 .72rem/1.5 monospace;text-transform:uppercase;letter-spacing:.13em}.hero{position:relative;overflow:hidden;isolation:isolate;display:grid;align-content:center;min-height:clamp(29rem,68vh,46rem);padding:clamp(1.3rem,5vw,5rem);margin:1rem 0 0;color:#fff9f1;background:radial-gradient(ellipse at 88% 80%,#b7478b 0,transparent 54%),linear-gradient(125deg,#211153 15%,#4026a1 55%,#6149be)}.hero:before{content:"";position:absolute;inset:0;z-index:-1;background-image:linear-gradient(#fff2 1px,transparent 1px),linear-gradient(90deg,#fff2 1px,transparent 1px);background-size:43px 43px;mask-image:linear-gradient(120deg,transparent 25%,black)}h1,h2,h3,p{margin:0}h1{font:400 clamp(4rem,12.8vw,12rem)/.81 Georgia,serif;letter-spacing:-.095em;margin:1.5rem 0 1.8rem}.intro{max-width:24ch;font-size:clamp(1rem,2vw,1.3rem)}.lens{position:absolute;right:11%;bottom:15%;width:clamp(5rem,15vw,13rem);aspect-ratio:1;border-radius:100%;border:1px solid #fff9f1;background:#f8dd8d;color:#26164d;display:grid;place-content:center;cursor:pointer;box-shadow:0 0 0 7px #fff3,0 12px 45px #16082a70;transition:transform .2s,background .2s;font:600 clamp(.62rem,1.3vw,1rem)/1.3 monospace;text-align:center}.lens:hover,.lens[aria-expanded=true]{transform:rotate(-8deg) scale(1.06);background:#ffeab0}.lens strong{font:400 clamp(1.6rem,5vw,4rem)/1 Georgia,serif}.lens-note{position:absolute;right:4%;bottom:3%;background:#211153;color:white;padding:.7rem 1rem;max-width:22ch;font-size:.85rem}.section-label{margin:3rem 0 1.4rem}.projects{display:grid;grid-template-columns:1.2fr 1fr;gap:1.25rem}.project{border-bottom:1px solid var(--line);padding-bottom:1rem}summary{cursor:pointer;list-style:none}summary::-webkit-details-marker{display:none}.cover{display:grid;place-items:center;min-height:clamp(11rem,29vw,22rem);overflow:hidden}.cover-one{background:#dcd5f9;color:#2f1f70}.cover-two{background:#dbe2c1;color:#30391b}.graphic{font:400 clamp(2.5rem,7vw,7rem)/1 Georgia,serif;letter-spacing:-.07em;border:1px solid currentColor;border-radius:50%;padding:.25em .4em;transition:transform .2s}summary:hover .graphic,summary:focus-visible .graphic{transform:scale(1.06)}.project-title{display:flex;justify-content:space-between;align-items:center;padding:.75rem 0}.project-title h3{font:400 clamp(1.6rem,3vw,2.6rem)/1 Georgia,serif}details[open] .arrow{transform:rotate(45deg)}.project p{max-width:54ch}.about{max-width:60ch;margin-bottom:3rem}.about h2{font:400 clamp(2rem,5vw,4.5rem)/1 Georgia,serif;margin-bottom:.75rem}footer{border-top:1px solid var(--line);border-bottom:0;margin-bottom:1rem}@media(max-width:650px){.projects{grid-template-columns:1fr}.lens{right:9%;bottom:12%}.intro{max-width:18ch}.lens-note{bottom:1%;right:2%}}@media(prefers-reduced-motion:reduce){*,*::before{scroll-behavior:auto!important;transition:none!important}}
+</style>
+</head>
+<body><div class="wrap">
+<header id="top"><span class="stamp">Closer Look / Portfolio</span><nav aria-label="Main"><a href="#work">Work</a><a href="#about">About</a></nav></header>
+<main>
+<section class="hero" aria-labelledby="hero-title">
+<p class="eyebrow">Computer science &amp; creative web</p>
+<h1 id="hero-title">Take a<br>closer look.</h1>
+<p class="intro">Selected projects, design decisions, and the details behind them.</p>
+<button class="lens" type="button" aria-expanded="false" aria-controls="lens-note"><strong aria-hidden="true">+</strong> Look closer</button>
+<p class="lens-note" id="lens-note" hidden>A small detail can change how a whole interface feels.</p>
+</section>
+<section id="work" aria-labelledby="work-title">
+<h2 id="work-title" class="section-label"><span>01 / Selected work</span><span>Project previews</span></h2>
+<div class="projects">
+<article class="project"><details><summary><div class="cover cover-one" aria-hidden="true"><span class="graphic">Look ↗</span></div><div class="project-title"><h3>Closer Look</h3><span class="arrow" aria-hidden="true">↗</span></div><span class="meta">Web interaction / Prototype</span></summary><p>This portfolio prototype pairs a gradient and a lens control with a direct route to the work. The lens works with touch and keyboard, and the page respects reduced-motion preferences.</p></details></article>
+<article class="project"><details><summary><div class="cover cover-two" aria-hidden="true"><span class="graphic">{ 02 }</span></div><div class="project-title"><h3>Project 02</h3><span class="arrow" aria-hidden="true">↗</span></div><span class="meta">Reserved for a case study</span></summary><p>This space will hold a project demo and a short account of the problem, the implementation, and the results.</p></details></article>
+</div>
+</section>
+<section id="about" aria-labelledby="about-title"><p class="section-label">02 / About</p><div class="about"><h2 id="about-title">Code meets design.</h2><p>A space for computer science projects and experiments in how people interact with software.</p></div></section>
+</main>
+<footer><span class="stamp">Closer Look / Portfolio concept</span><a href="#top">Back to top ↑</a></footer>
+</div>
+<script>
+const lens = document.querySelector('.lens');
+const note = document.getElementById('lens-note');
+lens.addEventListener('click', () => {
+  const expanded = lens.getAttribute('aria-expanded') === 'true';
+  lens.setAttribute('aria-expanded', String(!expanded));
+  note.hidden = expanded;
+});
+</script>
+</body>
+</html>
