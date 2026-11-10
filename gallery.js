@@ -1,9 +1,9 @@
 const photography = [
-  { id: 'landscape', title: 'Landscape', total: 2 },
-  { id: 'architecture', title: 'Architecture', total: 3 },
-  { id: 'portrait', title: 'Portrait', total: 3 },
-  { id: 'abstraction', title: 'Abstraction', total: 2 },
-  { id: 'others', title: 'Other Works', total: 2 },
+  { id: 'landscape', title: 'Landscape', total: 2, desktopCover: 2 },
+  { id: 'architecture', title: 'Architecture', total: 3, desktopCover: 2 },
+  { id: 'portrait', title: 'Portrait', total: 3, desktopCover: 1 },
+  { id: 'abstraction', title: 'Abstraction', total: 2, desktopCover: 1 },
+  { id: 'others', title: 'Other Works', total: 2, desktopCover: 2 },
 ];
 
 const bookmarks = document.querySelector('.bookmarks');
@@ -70,10 +70,18 @@ photography.forEach((series, index) => {
   bookmark.querySelector('.bookmark-count').textContent = numberLabel(series.total) + ' photographs';
   if (hasPhotos) {
     const frame = bookmark.querySelector('.bookmark-cover');
+    const picture = document.createElement('picture');
+    const desktop = document.createElement('source');
+    desktop.media = '(width > 700px) and (hover: hover), (width > 700px) and (orientation: landscape)';
+    desktop.srcset = 'gallery-media/' + series.id + '-' + numberLabel(series.desktopCover) + '.jpg';
     frame.classList.add('has-image');
-    const cover = loadPhoto('gallery-media/' + series.id + '-cover.jpg', '', () => frame.classList.remove('has-image'));
+    const cover = loadPhoto('gallery-media/' + series.id + '-cover.jpg', '', () => {
+      picture.remove();
+      frame.classList.remove('has-image');
+    });
     cover.draggable = false;
-    frame.append(cover);
+    picture.append(desktop, cover);
+    frame.append(picture);
   }
 
   let press = null;

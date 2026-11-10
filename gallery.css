@@ -21,6 +21,7 @@
 }
 .bookmark {
   --edge: clamp(.8rem, 2.35vw, 2.7rem);
+  --closed-preview: inset(0 0 100% 0);
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -45,20 +46,33 @@
 
 .bookmark-cover {
   position: absolute;
-  inset: 11% var(--edge) 32%;
+  inset: 0;
   display: grid;
   place-items: center;
   overflow: hidden;
   pointer-events: none;
   opacity: var(--preview-opacity, 0);
-  clip-path: var(--preview-clip, inset(0 100% 0 0));
+  clip-path: var(--preview-clip, var(--closed-preview));
   filter: blur(var(--preview-blur, 9px));
-  transition: clip-path .52s var(--ease), opacity .36s var(--ease), filter .55s var(--ease);
+  transition: clip-path .62s var(--ease), opacity .28s var(--ease), filter .55s var(--ease);
 }
 .bookmark-cover:not(.has-image) { background: var(--series-cover); }
-.bookmark-cover img { display: block; width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.bookmark-cover picture, .bookmark-cover img { display: block; width: 100%; height: 100%; min-height: 0; }
+.bookmark-cover img { object-fit: cover; object-position: var(--cover-focus, 50%) center; }
+.bookmark-cover::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, transparent 56%, #18141d38 72%, #17131cc9 100%);
+}
+.bookmark.landscape { --cover-focus: 60%; }
+.bookmark.architecture { --cover-focus: 74%; }
+.bookmark.portrait { --cover-focus: 28%; }
+.bookmark.abstraction { --cover-focus: 52%; }
+.bookmark.others { --cover-focus: 59%; }
 .bookmark-label {
   position: absolute;
+  z-index: 1;
   inset: auto var(--edge) var(--label-bottom, 50%);
   display: grid;
   gap: .46rem;
@@ -113,7 +127,7 @@
   }
   .bookmarks:has(.bookmark:hover) .bookmark:focus-visible:not(:hover):not(.is-previewed) {
     --preview-opacity: 0;
-    --preview-clip: inset(0 100% 0 0);
+    --preview-clip: var(--closed-preview);
     --preview-blur: 9px;
     --label-bottom: 50%;
     --label-shift: 50%;
@@ -193,11 +207,13 @@ html:has(.series[open]) { overflow: hidden; }
   }
   .bookmark {
     --edge: clamp(.85rem, 5vw, 2.5rem);
+    --closed-preview: inset(100% 0 0);
     border-inline-end: 0;
     border-block-end: 1px solid #eee7f01d;
   }
-  .bookmark-cover { inset: .55rem var(--edge) .55rem 48%; clip-path: var(--preview-clip, inset(100% 0 0)); }
-  .bookmark-cover img { object-position: center right; }
+  .bookmark-cover { inset: .55rem var(--edge) .55rem 48%; }
+  .bookmark-cover img { object-fit: contain; object-position: center right; }
+  .bookmark-cover::after { content: none; }
   .bookmark-label { inset: auto 53% 50% var(--edge); transform: translateY(50%); gap: .28rem; }
   .bookmark-number { font-size: clamp(1.85rem, 8vw, 3.5rem); }
   .bookmark-title { font-size: clamp(.85rem, 4.1vw, 1.3rem); }
