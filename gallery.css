@@ -76,8 +76,9 @@
   inset: auto var(--edge) var(--label-bottom, 50%);
   display: grid;
   gap: .46rem;
+  opacity: var(--label-opacity, 1);
   transform: translateY(var(--label-shift, 50%));
-  transition: bottom .52s var(--ease), transform .52s var(--ease);
+  transition: bottom .52s var(--ease), transform .52s var(--ease), opacity .52s var(--ease);
 }
 .bookmark-number {
   color: #dad5db;
@@ -116,6 +117,7 @@
   --preview-blur: 0px;
   --label-bottom: 8%;
   --label-shift: 0%;
+  --label-opacity: .86;
 }
 @media (hover: hover) {
   .bookmark:hover {
@@ -124,6 +126,7 @@
     --preview-blur: 0px;
     --label-bottom: 8%;
     --label-shift: 0%;
+    --label-opacity: .86;
   }
   .bookmarks:has(.bookmark:hover) .bookmark:focus-visible:not(:hover):not(.is-previewed) {
     --preview-opacity: 0;
@@ -131,6 +134,7 @@
     --preview-blur: 9px;
     --label-bottom: 50%;
     --label-shift: 50%;
+    --label-opacity: 1;
   }
 }
 
@@ -214,7 +218,7 @@ html:has(.series[open]) { overflow: hidden; }
   .bookmark-cover { inset: .55rem var(--edge) .55rem 48%; }
   .bookmark-cover img { object-fit: contain; object-position: center right; }
   .bookmark-cover::after { content: none; }
-  .bookmark-label { inset: auto 53% 50% var(--edge); transform: translateY(50%); gap: .28rem; }
+  .bookmark-label { inset: auto 53% 50% var(--edge); transform: translateY(50%); gap: .28rem; opacity: 1; }
   .bookmark-number { font-size: clamp(1.85rem, 8vw, 3.5rem); }
   .bookmark-title { font-size: clamp(.85rem, 4.1vw, 1.3rem); }
   .bookmark-count { font-size: .55rem; }
