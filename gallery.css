@@ -1,0 +1,172 @@
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  clip-path: inset(50%);
+  overflow: hidden;
+  white-space: nowrap;
+}
+
+.images { background: #211d27; }
+.bookmarks {
+  display: grid;
+  grid-auto-flow: column;
+  grid-auto-columns: minmax(0, 1fr);
+  min-width: 0;
+  min-height: 0;
+  gap: 1px;
+  background: #e4d6ea35;
+}
+
+.bookmark {
+  position: relative;
+  isolation: isolate;
+  overflow: hidden;
+  min-width: 0;
+  padding: 0;
+  border: 0;
+  background: #302838;
+  color: var(--series-ink);
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.bookmark:focus-visible { outline-offset: -5px; }
+.landscape { --series-ink: #e3e2cf; --series-cover: radial-gradient(ellipse at 82% 34%, #adac88, transparent 52%), linear-gradient(151deg, #253237 28%, #586c62 48%, #26352d 52%, #72654a 79%); }
+.architecture { --series-ink: #e8ddcd; --series-cover: repeating-linear-gradient(119deg, #393f42 0 12%, #7e8078 12% 19%, #b4aa97 19% 25%, #565653 25% 31%); }
+.portrait { --series-ink: #f0d8cf; --series-cover: radial-gradient(ellipse at 52% 43%, #ba8977 2%, #81504d 37%, #432f37 69%, #2a222a 100%); }
+.abstraction { --series-ink: #e5d8f0; --series-cover: repeating-radial-gradient(ellipse at 76% 53%, transparent 0 27px, #d3aadc65 28px 30px, transparent 31px 41px), linear-gradient(144deg, #261e49, #846782); }
+.others { --series-ink: #eee1c7; --series-cover: linear-gradient(135deg, #40332c 12%, #896343 32%, #a28660 44%, #524938 46%, #262a23 84%); }
+
+.bookmark-cover, .bookmark::after, .bookmark-glass { position: absolute; inset: 0; }
+.bookmark-cover { z-index: -2; background: var(--series-cover); }
+.bookmark-cover img { display: block; width: 100%; height: 100%; object-fit: cover; }
+.bookmark::after {
+  content: "";
+  z-index: -1;
+  background: linear-gradient(180deg, #14131b44, transparent 35%, transparent 72%, #14131b22);
+}
+.bookmark-number {
+  position: absolute;
+  top: max(4rem, 9%);
+  left: clamp(.75rem, 2vw, 2rem);
+  color: #eee4e0ba;
+  font-size: .68rem;
+  letter-spacing: .22em;
+  text-shadow: 0 1px 6px #121015;
+}
+.bookmark-glass {
+  display: grid;
+  align-content: end;
+  gap: .45rem;
+  padding: clamp(.8rem, 2vw, 2rem);
+  background: linear-gradient(155deg, #40344922, #292332a6 86%);
+  backdrop-filter: blur(17px) saturate(.8);
+  -webkit-backdrop-filter: blur(17px) saturate(.8);
+  clip-path: inset(0 100% 0 0);
+  opacity: 0;
+  transition: clip-path .52s var(--ease), opacity .38s var(--ease);
+}
+.bookmark-title {
+  font-size: clamp(1rem, 2.2vw, 2.45rem);
+  font-weight: 400;
+  letter-spacing: .025em;
+  line-height: 1.1;
+  overflow-wrap: anywhere;
+}
+.bookmark-count { font-size: .67rem; letter-spacing: .16em; text-transform: uppercase; }
+.bookmark-enter { margin-top: .75rem; font-size: 1.25rem; opacity: .65; }
+.bookmark:focus-visible .bookmark-glass,
+.bookmark.is-previewed .bookmark-glass { clip-path: inset(0); opacity: 1; }
+@media (hover: hover) {
+  .bookmark:hover .bookmark-glass { clip-path: inset(0); opacity: 1; }
+  .bookmarks:has(.bookmark:hover) .bookmark:focus-visible:not(:hover) .bookmark-glass { clip-path: inset(0 100% 0 0); opacity: 0; }
+}
+
+html:has(.series[open]) { overflow: hidden; }
+.series {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: #1a1720;
+  color: var(--series-ink);
+  overflow: hidden;
+}
+.series::backdrop { background: #17141d; }
+.series-bar {
+  position: absolute;
+  z-index: 1;
+  inset: 0 0 auto;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 1rem;
+  padding: max(.9rem, env(safe-area-inset-top)) clamp(1rem, 4vw, 3rem) .8rem;
+  background: linear-gradient(#1a1628b8, transparent);
+  pointer-events: none;
+}
+.series-bar h2 { margin: 0; font-size: clamp(.85rem, 2vw, 1.25rem); font-weight: 400; letter-spacing: .1em; }
+.series-bar button {
+  pointer-events: auto;
+  width: 2.8rem;
+  height: 2.8rem;
+  border: 1px solid #ede2ed36;
+  border-radius: 50%;
+  background: #2c233880;
+  backdrop-filter: blur(10px);
+  font: inherit;
+  font-size: 1.35rem;
+  cursor: pointer;
+}
+.series-scroll { height: 100%; overflow-y: auto; overscroll-behavior: contain; scroll-snap-type: y mandatory; }
+.series-photo {
+  display: grid;
+  place-items: center;
+  position: relative;
+  height: 100%;
+  margin: 0;
+  overflow: hidden;
+  scroll-snap-align: start;
+  background: #1a1720;
+}
+.series-photo img { width: 100%; height: 100%; min-height: 0; object-fit: contain; }
+.series-photo.sample { background: var(--series-cover); }
+.series-photo figcaption {
+  position: absolute;
+  bottom: max(1.2rem, env(safe-area-inset-bottom));
+  left: clamp(1rem, 4vw, 3rem);
+  color: var(--series-ink);
+  font-size: .68rem;
+  letter-spacing: .2em;
+  text-shadow: 0 1px 7px #151218;
+}
+
+@media (max-width: 700px), (hover: none) and (orientation: portrait) {
+  .bookmarks {
+    grid-auto-flow: row;
+    grid-auto-columns: auto;
+    grid-auto-rows: minmax(4.6rem, 1fr);
+    overflow-y: auto;
+  }
+  .bookmark-number { top: .75rem; left: .9rem; }
+  .bookmark-glass {
+    padding: .65rem .9rem .65rem 2.7rem;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-content: center;
+    align-items: center;
+    background: linear-gradient(90deg, #292332a6, #34294055);
+    clip-path: inset(100% 0 0);
+  }
+  .bookmark-count { grid-row: 2; }
+  .bookmark-enter { grid-column: 2; grid-row: 1 / span 2; margin: 0; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .bookmark-glass { transition: none; }
+}
