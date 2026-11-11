@@ -2,8 +2,10 @@ const photography = [
   { id: 'landscape', title: 'Landscape', order: [2, 1], desktopCover: 2 },
   { id: 'architecture', title: 'Architecture', order: [2, 1, 3], desktopCover: 2 },
   { id: 'portrait', title: 'Portrait', order: [1, 2, 3], desktopCover: 1 },
+  { id: 'action', title: 'Action', order: [3, 4, 5, 6, 1, 2], desktopCover: 3 },
+  { id: 'monochrome', title: 'Monochrome', order: [1, 2, 5, 6, 4, 3], desktopCover: 2 },
   { id: 'abstraction', title: 'Abstraction', order: [1, 2], desktopCover: 1 },
-  { id: 'others', title: 'Other Works', order: [2, 1], desktopCover: 2 },
+  { id: 'others', title: 'Other Works', order: [3, 2, 4, 1], desktopCover: 2 },
 ];
 
 const bookmarks = document.querySelector('.bookmarks');
