@@ -25,7 +25,6 @@
 }
 .bookmark {
   --edge: clamp(.8rem, 2.35vw, 2.7rem);
-  --closed-veil: inset(0);
   position: relative;
   isolation: isolate;
   overflow: hidden;
@@ -34,7 +33,6 @@
   border: 0;
   border-inline-end: 1px solid #eee7f01d;
   background: linear-gradient(145deg, #e9e5ec16, #e9e5ec04 47%, #16141b32);
-  backdrop-filter: blur(16px);
   color: #e0dce1;
   font: inherit;
   text-align: left;
@@ -67,10 +65,9 @@
   position: absolute;
   inset: 0;
   z-index: 1;
-  background: #19171f70;
-  backdrop-filter: saturate(.38) blur(1.5px);
-  clip-path: var(--preview-veil, var(--closed-veil));
-  transition: clip-path .62s var(--ease);
+  background: #1c1a22c9;
+  transform: translateY(var(--preview-veil, 0%));
+  transition: transform .42s var(--ease);
 }
 .bookmark-cover::after {
   content: "";
@@ -134,7 +131,7 @@
 .bookmark-open { display: none; }
 .bookmark.is-previewed, .bookmark:focus-visible {
   --preview-opacity: 1;
-  --preview-veil: inset(100% 0 0 0);
+  --preview-veil: 100%;
   --label-bottom: 8%;
   --label-shift: 0%;
   --label-opacity: .86;
@@ -142,14 +139,14 @@
 @media (hover: hover) {
   .bookmark:hover {
     --preview-opacity: 1;
-    --preview-veil: inset(100% 0 0 0);
+    --preview-veil: 100%;
     --label-bottom: 8%;
     --label-shift: 0%;
     --label-opacity: .86;
   }
   .bookmarks:has(.bookmark:hover) .bookmark:focus-visible:not(:hover):not(.is-previewed) {
     --preview-opacity: 0;
-    --preview-veil: var(--closed-veil);
+    --preview-veil: 0%;
     --label-bottom: 50%;
     --label-shift: 50%;
     --label-opacity: 1;
@@ -265,24 +262,20 @@ html:has(.series[open]) { overflow: hidden; }
 @media (max-width: 700px), (hover: none) and (orientation: portrait) {
   html { scroll-snap-type: y proximity; }
   .screen.images {
-    height: auto;
-    min-height: 100svh;
-    padding: max(3.5rem, env(safe-area-inset-top)) clamp(.8rem, 4vw, 1.4rem) 1.4rem;
-    scroll-snap-stop: normal;
+    grid-template-rows: minmax(0, 1fr);
+    padding-block: env(safe-area-inset-top) env(safe-area-inset-bottom);
   }
   .bookmarks {
     grid-auto-flow: row;
     grid-auto-columns: auto;
-    grid-auto-rows: clamp(8rem, 32vw, 12rem);
-    gap: .7rem;
-    overflow: visible;
+    grid-auto-rows: minmax(0, 1fr);
+    overflow: hidden;
     scroll-snap-type: none;
   }
   .bookmark {
     --edge: clamp(.85rem, 5vw, 2.5rem);
     border-inline-end: 0;
-    border: 1px solid #eee7f025;
-    border-radius: .35rem;
+    border-block-end: 1px solid #eee7f025;
   }
   .bookmark.landscape { --mobile-cover-focus: 50% 45%; }
   .bookmark.architecture { --mobile-cover-focus: 50% 25%; }
@@ -293,14 +286,25 @@ html:has(.series[open]) { overflow: hidden; }
   .bookmark.others { --mobile-cover-focus: 50% 57%; }
   .bookmark-cover img { object-fit: cover; object-position: var(--mobile-cover-focus); }
   .bookmark-cover::after { background: linear-gradient(180deg, transparent 24%, #18141d38 50%, #17131cb8 100%); }
-  .bookmark-label { gap: .28rem; }
-  .bookmark-number { font-size: clamp(1.85rem, 8vw, 3.5rem); }
+  .bookmark-label {
+    bottom: 50%;
+    grid-template-columns: 2.4em minmax(0, 1fr) auto;
+    align-items: center;
+    gap: .6rem;
+    transform: translateY(50%);
+    transition: opacity .3s var(--ease);
+  }
+  .bookmark-number { font-size: clamp(1.35rem, min(6vw, 5svh), 2.1rem); }
   .bookmark-title { font-size: clamp(.85rem, 4.1vw, 1.3rem); }
-  .bookmark-count { font-size: .55rem; }
-  .bookmark-enter { display: none; }
-  .bookmark.is-previewed .bookmark-count { display: none; }
-  .bookmark.is-previewed .bookmark-open { display: block; font-size: .66rem; letter-spacing: .045em; }
+  .bookmark-count, .bookmark-enter { display: none; }
+  .bookmark-open {
+    display: block;
+    opacity: var(--preview-opacity, 0);
+    font-size: .66rem;
+    letter-spacing: .045em;
+    transition: opacity .3s var(--ease);
+  }
 }
 @media (prefers-reduced-motion: reduce) {
-  .bookmark-cover::before, .bookmark-label, .bookmark-count, .bookmark-enter { transition: none; }
+  .bookmark-cover::before, .bookmark-label, .bookmark-count, .bookmark-enter, .bookmark-open { transition: none; }
 }
