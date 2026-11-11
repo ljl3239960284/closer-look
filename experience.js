@@ -22,13 +22,12 @@ for (const strip of signature.querySelectorAll('.signature-strip')) {
     tile.className = 'signature-tile';
     const frame = document.createElement('span');
     frame.className = 'signature-frame';
+    if (file === 'monochrome-01') frame.classList.add('signature-scan-crop');
     frame.style.setProperty('--tile-tone', signatureTones[index % signatureTones.length]);
     frame.style.setProperty('--frame-ratio', width + ' / ' + height);
     if (window.portfolioHasPhotos === true) {
       const image = document.createElement('img');
       image.alt = '';
-      image.width = Number(width);
-      image.height = Number(height);
       image.decoding = 'async';
       image.src = 'gallery-media/intro/' + file + '.jpg';
       image.addEventListener('error', () => image.remove(), { once: true });

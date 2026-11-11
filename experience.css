@@ -40,6 +40,12 @@
   letter-spacing: .06em;
 }
 .signature-links a:hover { text-decoration: underline; text-underline-offset: .25em; }
+.signature-links a[href="#video"] {
+  padding-inline: .85rem;
+  border: 1px solid #34302b40;
+  border-radius: 2rem;
+}
+.signature-links a[href="#video"]:hover { background: #34302b; color: #e7e2d9; text-decoration: none; }
 .signature :focus-visible { outline-color: #51463b; }
 .signature-strip {
   --film-edge: #38332e;
@@ -72,9 +78,12 @@
 }
 .signature-sequence::before { top: 0; }
 .signature-sequence::after { bottom: 0; }
-.signature-tile { flex: none; padding-right: 3px; height: 100%; background: var(--film-edge); }
+.signature-tile { flex: none; padding-right: 8px; height: 100%; background: var(--film-edge); }
 .signature-frame { position: relative; display: block; height: 100%; aspect-ratio: var(--frame-ratio); background: var(--tile-tone); }
 .signature-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+.signature-scan-crop { overflow: hidden; }
+/* The scan's middle exposure, excluding the sprockets and neighboring frames. */
+.signature-scan-crop img { inset: -21.15% auto auto -28.5%; width: 153.19%; height: 153.85%; }
 @keyframes strip-travel { to { transform: translateX(-50%); } }
 .signature-toggle {
   position: absolute;
@@ -112,54 +121,7 @@
   transition: transform .7s var(--ease);
 }
 .home-art [hidden] { display: none; }
-.home::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(90deg, #15212bb3, #18212b33 72%), linear-gradient(0deg, #121a2470, transparent 54%);
-}
-.home-copy {
-  position: relative;
-  z-index: 1;
-  align-self: end;
-  padding: 0 clamp(1.5rem, 7vw, 8rem) max(3rem, 10vh);
-}
-.home-name {
-  margin: 0 0 1.25rem;
-  font-size: .75rem;
-  font-weight: 500;
-  letter-spacing: .16em;
-  text-transform: uppercase;
-}
-.home h2 {
-  margin: 0 0 2rem;
-  font-size: clamp(3.6rem, 9.5vw, 10rem);
-  line-height: .96;
-  font-weight: 350;
-  letter-spacing: -.035em;
-}
-.home-links { display: flex; flex-wrap: wrap; gap: .8rem; }
-.home-links a {
-  display: inline-flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 2rem;
-  min-height: 2.85rem;
-  padding: .7rem 1rem;
-  border: 1px solid #f0e9df55;
-  border-radius: 2rem;
-  background: #28333b5c;
-  backdrop-filter: blur(10px);
-  color: #eeece5;
-  font-size: .8rem;
-  letter-spacing: .04em;
-  text-decoration: none;
-  transition: background .25s, translate .25s;
-}
-.home-links a:hover { background: #38444bb0; translate: 0 -2px; }
 .home.is-in-view .home-art { animation: frame-open 1.15s var(--ease) both; }
-.home.is-in-view .home-copy { animation: title-in .85s .2s var(--ease) both; }
 @keyframes frame-open {
   from { clip-path: inset(44% 0); filter: blur(12px); }
   to { clip-path: inset(0); filter: blur(0); }
@@ -264,14 +226,13 @@ html:has(.film-player[open]) { overflow: hidden; }
 @media (max-width: 700px) {
   .signature-strip { height: min(100%, clamp(3.25rem, 11.5svh, 6rem)); }
   .signature-copy h1 { font-size: clamp(2.8rem, 13vw, 5.5rem); }
-  .home h2 { font-size: clamp(2.9rem, 12vw, 5.5rem); }
-  .home-copy { padding-bottom: 12svh; }
+  .signature-tile { padding-right: 5px; }
   .home-art img { object-position: 60% center; }
   .film-caption { bottom: 20%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .signature-track { animation: none; }
   .signature-toggle { display: none; }
-  .home.is-in-view .home-art, .home.is-in-view .home-copy, .motion.is-in-view .film-still { animation: none; }
-  .home-art img, .home-links a, .film-still, .film-play { transition: none; }
+  .home.is-in-view .home-art, .motion.is-in-view .film-still { animation: none; }
+  .home-art img, .film-still, .film-play { transition: none; }
 }
