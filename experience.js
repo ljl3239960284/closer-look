@@ -36,7 +36,6 @@ const experienceObserver = new IntersectionObserver(entries => {
     entry.target.classList.toggle('is-in-view', entry.isIntersecting);
   }
 }, { threshold: .55 });
-experienceObserver.observe(document.querySelector('.motion'));
 experienceObserver.observe(signature);
 
 const signatureTones = ['#454e55', '#a09381', '#625755', '#353643', '#777873'];
@@ -105,6 +104,9 @@ if (filmUrl) {
   if (videoId && /^[A-Za-z0-9_-]{11}$/.test(videoId)) {
     filmCard.disabled = false;
     filmPlayer.querySelector('.film-external').href = filmUrl;
+    const fallback = document.querySelector('.film-fallback');
+    fallback.href = filmUrl;
+    fallback.hidden = false;
     filmCard.addEventListener('click', () => {
       const embed = document.createElement('iframe');
       embed.title = 'RestCue film';

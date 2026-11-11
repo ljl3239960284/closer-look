@@ -100,10 +100,6 @@
 }
 .signature-toggle:hover { background: #51463b13; }
 
-@keyframes frame-open {
-  from { clip-path: inset(44% 0); filter: blur(12px); }
-  to { clip-path: inset(0); filter: blur(0); }
-}
 .screen.motion { background: #27242b; color: #e4dfd9; }
 .film-card {
   position: absolute;
@@ -161,7 +157,6 @@
 .film-card:disabled .film-play, .film-card:disabled .film-watch { display: none; }
 .film-card:hover:not(:disabled) .film-still { transform: scale(1.025); }
 .film-card:hover:not(:disabled) .film-play { transform: scale(1.08); background: #68523c70; }
-.motion.is-in-view .film-still { animation: frame-open 1s var(--ease) both; }
 .motion .author {
   position: absolute;
   z-index: 1;
@@ -206,6 +201,5 @@ html:has(.film-player[open]) { overflow: hidden; }
 @media (prefers-reduced-motion: reduce) {
   .signature-track { animation: none; }
   .signature-toggle { display: none; }
-  .motion.is-in-view .film-still { animation: none; }
   .film-still, .film-play { transition: none; }
 }

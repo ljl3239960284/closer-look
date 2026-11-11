@@ -62,7 +62,10 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 </button>
 <footer class="author">
 <div><strong>Fabio</strong><span>Photography &amp; Film</span></div>
+<div>
+<a class="film-fallback" target="_blank" rel="noopener" hidden>YouTube ↗</a>
 <a href="https://github.com/ljl3239960284">GitHub ↗</a>
+</div>
 </footer>
 </section>
 </main>
@@ -96,7 +99,7 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 </template>
 <script src="photo-mode.js" defer></script>
 <script src="gallery.js" defer></script>
-<script src="experience.js" defer></script>
+<script src="experience.js" type="module"></script>
 <script>
 const topbar = document.querySelector('.top');
 const menu = topbar.querySelector('.menu');
