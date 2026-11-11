@@ -33,14 +33,24 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 <body>
 <header class="top">
 <button class="menu" type="button" aria-label="Toggle navigation" aria-controls="site-nav" aria-expanded="false">≡</button>
-<div class="top-bar" id="site-nav"><a href="#home" class="wordmark">Closer Look</a><nav aria-label="Main"><a href="#images">Images</a><a href="#video">Video</a></nav></div>
+<div class="top-bar" id="site-nav"><a href="#intro" class="wordmark">Fabio Liang</a><nav aria-label="Main"><a href="#images">Images</a><a href="#video">Video</a></nav></div>
 </header>
 <main>
+<section class="screen signature" id="intro" aria-labelledby="signature-title">
+<div class="signature-strip signature-strip-top" data-frames="landscape-02 architecture-02 portrait-01 action-06 monochrome-01" aria-hidden="true"></div>
+<div class="signature-copy">
+<p>Photography &amp; Film</p>
+<h1 id="signature-title">Fabio Liang</h1>
+<a href="#home">Explore work <span aria-hidden="true">↓</span></a>
+</div>
+<div class="signature-strip signature-strip-bottom" data-frames="abstraction-01 others-02 monochrome-03 architecture-03 landscape-01" aria-hidden="true"></div>
+<button class="signature-toggle" type="button" aria-pressed="false" aria-label="Pause photo strips">Ⅱ</button>
+</section>
 <section class="screen home" id="home" aria-labelledby="home-title">
 <div class="home-art" aria-hidden="true"><img data-src="gallery-media/landscape-02.jpg" alt="" hidden></div>
 <div class="home-copy">
 <p class="home-name">Fabio / Selected work</p>
-<h1 id="home-title">Photography<br>&amp; Film</h1>
+<h2 id="home-title">Photography<br>&amp; Film</h2>
 <nav class="home-links" aria-label="Explore the portfolio">
 <a href="#images">Photographs <span aria-hidden="true">↓</span></a>
 <a href="#video">RestCue <span aria-hidden="true">↗</span></a>
@@ -54,9 +64,9 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 </section>
 <section class="screen motion" id="video" aria-labelledby="video-title">
 <button class="film-card" type="button" aria-label="Play RestCue" aria-haspopup="dialog" aria-controls="film-player" disabled>
-<img class="film-still" data-src="gallery-media/restcue-still.jpg" alt="" hidden>
+<img class="film-still" data-src="gallery-media/restcue-cover.jpg" alt="" hidden>
 <span class="film-play" aria-hidden="true">▶</span>
-<span class="film-caption"><span class="film-kicker">Film / 01</span><span id="video-title">RestCue</span><span class="film-watch">Watch film ↗</span></span>
+<span class="film-caption"><span class="film-kicker">Film / 01 · 4:38</span><span id="video-title">RestCue</span><span class="film-watch">Watch film ↗</span></span>
 </button>
 <footer class="author">
 <div><strong>Fabio</strong><span>Photography &amp; Film</span></div>

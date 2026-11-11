@@ -8,7 +8,7 @@ The desktop gallery uses tall covers that reveal on hover or keyboard focus. Eac
 
 Inside each series, use the arrows or scroll to move through the photographs. The page counter follows your position, and closing the gallery returns focus to the bookmark. The interface respects reduced-motion preferences.
 
-The opening page reveals a photograph and gives direct routes to the photography and film. Its pointer movement and opening animation respect reduced-motion preferences. The film opens from its still into a YouTube dialog. Closing the dialog unloads the player and returns focus to the still.
+The opening page frames the artist’s name with two photo strips travelling in opposite directions. Visitors can pause the strips or continue to the featured photograph and work index. The film opens from its cover into a YouTube dialog. Closing the dialog unloads the player and returns focus to the cover.
 
 Open [index.html](index.html) in a browser to run the gallery. The public demo uses abstract covers. Private media and the film URL are configured separately in photo-mode.js. No dependencies or build step are required.
 

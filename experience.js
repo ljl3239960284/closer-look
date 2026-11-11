@@ -1,4 +1,5 @@
 const opening = document.querySelector('.home');
+const signature = document.querySelector('.signature');
 const reduceExperienceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const experienceObserver = new IntersectionObserver(entries => {
   for (const entry of entries) {
@@ -7,6 +8,38 @@ const experienceObserver = new IntersectionObserver(entries => {
 }, { threshold: .55 });
 experienceObserver.observe(opening);
 experienceObserver.observe(document.querySelector('.motion'));
+experienceObserver.observe(signature);
+
+const signatureTones = ['#454e55', '#a09381', '#625755', '#353643', '#777873'];
+for (const strip of signature.querySelectorAll('.signature-strip')) {
+  const track = document.createElement('div');
+  track.className = 'signature-track';
+  const frames = strip.dataset.frames.split(' ');
+  for (const [index, file] of [...frames, ...frames].entries()) {
+    const tile = document.createElement('div');
+    tile.className = 'signature-tile';
+    const frame = document.createElement('span');
+    frame.className = 'signature-frame';
+    frame.style.setProperty('--tile-tone', signatureTones[index % signatureTones.length]);
+    if (window.portfolioHasPhotos === true) {
+      const image = document.createElement('img');
+      image.alt = '';
+      image.decoding = 'async';
+      image.src = 'gallery-media/intro/' + file + '.jpg';
+      image.addEventListener('error', () => image.remove(), { once: true });
+      frame.append(image);
+    }
+    tile.append(frame);
+    track.append(tile);
+  }
+  strip.append(track);
+}
+const stripToggle = signature.querySelector('.signature-toggle');
+stripToggle.addEventListener('click', () => {
+  const paused = signature.classList.toggle('is-paused');
+  stripToggle.setAttribute('aria-pressed', String(paused));
+  stripToggle.textContent = paused ? '▶' : 'Ⅱ';
+});
 
 if (window.portfolioHasPhotos === true) {
   for (const image of document.querySelectorAll('.home-art img, .film-still')) {
