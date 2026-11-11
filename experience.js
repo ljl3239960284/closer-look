@@ -14,25 +14,41 @@ const signatureTones = ['#454e55', '#a09381', '#625755', '#353643', '#777873'];
 for (const strip of signature.querySelectorAll('.signature-strip')) {
   const track = document.createElement('div');
   track.className = 'signature-track';
-  const frames = strip.dataset.frames.split(' ');
-  for (const [index, file] of [...frames, ...frames].entries()) {
+  const sequence = document.createElement('div');
+  sequence.className = 'signature-sequence';
+  for (const [index, entry] of strip.dataset.frames.split(' ').entries()) {
+    const [file, width, height] = entry.split(':');
     const tile = document.createElement('div');
     tile.className = 'signature-tile';
     const frame = document.createElement('span');
     frame.className = 'signature-frame';
     frame.style.setProperty('--tile-tone', signatureTones[index % signatureTones.length]);
+    frame.style.setProperty('--frame-ratio', width + ' / ' + height);
     if (window.portfolioHasPhotos === true) {
       const image = document.createElement('img');
       image.alt = '';
+      image.width = Number(width);
+      image.height = Number(height);
       image.decoding = 'async';
       image.src = 'gallery-media/intro/' + file + '.jpg';
       image.addEventListener('error', () => image.remove(), { once: true });
       frame.append(image);
     }
     tile.append(frame);
-    track.append(tile);
+    sequence.append(tile);
   }
+  track.append(sequence, sequence.cloneNode(true));
   strip.append(track);
+
+  // Each half of the track must fill the viewport before the loop resets.
+  const fillStrip = new ResizeObserver(() => {
+    const sequenceWidth = sequence.getBoundingClientRect().width;
+    if (!sequenceWidth) return;
+    const sequenceCount = 2 * Math.max(1, Math.ceil(strip.clientWidth / sequenceWidth));
+    while (track.childElementCount > sequenceCount) track.lastElementChild.remove();
+    while (track.childElementCount < sequenceCount) track.append(sequence.cloneNode(true));
+  });
+  fillStrip.observe(strip);
 }
 const stripToggle = signature.querySelector('.signature-toggle');
 stripToggle.addEventListener('click', () => {
