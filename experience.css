@@ -6,7 +6,13 @@
   background: #e7e2d9;
   color: #34302b;
 }
-.signature-copy { text-align: center; padding-inline: .8rem; }
+.signature-copy {
+  display: grid;
+  align-content: center;
+  min-height: 36svh;
+  text-align: center;
+  padding-inline: .8rem;
+}
 .signature-copy p {
   margin: 0 0 .6rem;
   font-size: .68rem;
@@ -36,7 +42,9 @@
 .signature-links a:hover { text-decoration: underline; text-underline-offset: .25em; }
 .signature :focus-visible { outline-color: #51463b; }
 .signature-strip {
-  height: 100%;
+  --film-edge: #38332e;
+  --film-rail: clamp(7px, 1.15svh, 11px);
+  height: min(100%, clamp(3.25rem, 13svh, 7.5rem));
   min-height: 0;
   min-width: 0;
   overflow: hidden;
@@ -44,8 +52,27 @@
 .signature-track { display: flex; width: max-content; height: 100%; animation: strip-travel 38s linear infinite paused; }
 .signature-strip-bottom .signature-track { animation-direction: reverse; animation-duration: 44s; }
 .signature.is-in-view:not(.is-paused) .signature-track { animation-play-state: running; }
-.signature-sequence { display: flex; flex: none; height: 100%; }
-.signature-tile { flex: none; padding-right: .55rem; height: 100%; }
+.signature-sequence {
+  position: relative;
+  display: flex;
+  flex: none;
+  height: 100%;
+  padding-block: var(--film-rail);
+}
+.signature-sequence::before,
+.signature-sequence::after {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  height: var(--film-rail);
+  background: var(--film-edge);
+  mask-image: radial-gradient(ellipse 4px 2.4px at center, transparent 85%, #000 100%);
+  mask-size: 17px 100%;
+  mask-repeat: round no-repeat;
+}
+.signature-sequence::before { top: 0; }
+.signature-sequence::after { bottom: 0; }
+.signature-tile { flex: none; padding-right: 3px; height: 100%; background: var(--film-edge); }
 .signature-frame { position: relative; display: block; height: 100%; aspect-ratio: var(--frame-ratio); background: var(--tile-tone); }
 .signature-frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 @keyframes strip-travel { to { transform: translateX(-50%); } }
@@ -235,6 +262,7 @@ html:has(.film-player[open]) { overflow: hidden; }
 .film-embed { aspect-ratio: 16 / 9; background: black; }
 .film-embed iframe { display: block; width: 100%; height: 100%; border: 0; }
 @media (max-width: 700px) {
+  .signature-strip { height: min(100%, clamp(3.25rem, 11.5svh, 6rem)); }
   .signature-copy h1 { font-size: clamp(2.8rem, 13vw, 5.5rem); }
   .home h2 { font-size: clamp(2.9rem, 12vw, 5.5rem); }
   .home-copy { padding-bottom: 12svh; }
