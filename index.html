@@ -13,13 +13,7 @@ body{margin:0;color:var(--ink);font:400 16px/1.4 system-ui,sans-serif}
 button,a{color:inherit}
 a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 .screen{position:relative;isolation:isolate;display:grid;height:100vh;height:100svh;overflow:hidden;scroll-snap-align:start;scroll-snap-stop:always}
-.home{background:radial-gradient(ellipse at 82% 79%,#bd4f88,transparent 57%),linear-gradient(125deg,#211153 15%,#462da7 58%,#6652bd)}
-.home::before{content:"";position:absolute;inset:0;background:linear-gradient(#fff2 1px,transparent 1px),linear-gradient(90deg,#fff2 1px,transparent 1px);background-size:48px 48px;mask-image:linear-gradient(130deg,transparent 25%,black)}
-.overlay{opacity:0;transform:translateY(7px);transition:opacity .45s var(--ease),transform .45s var(--ease)}
-.screen.is-revealed .overlay,.caption:hover,.caption:focus-within{opacity:1;transform:none}
-.caption{position:absolute;z-index:1;top:max(3.5rem,9%);left:clamp(1.4rem,6vw,7rem);padding:.75rem 1rem .9rem;text-shadow:0 2px 14px #180c29,0 1px 5px #180c29;max-width:calc(100% - 3rem)}
-.caption small,.wordmark{font:600 .69rem/1.4 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.19em}
-.caption h1,.caption h2{margin:.28em 0 0;font:500 clamp(2rem,5.4vw,5.8rem)/.93 system-ui,sans-serif;letter-spacing:-.075em}
+.wordmark{font:600 .69rem/1.4 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.19em}
 .top{position:fixed;inset:0 0 auto;z-index:3;padding:.65rem clamp(1rem,4vw,4rem) .5rem;min-height:2.6rem}
 .top-bar{display:flex;justify-content:space-between;align-items:center;gap:1rem;background:#151021e8;border:1px solid #ffffff29;border-radius:3rem;padding:.65rem 1rem;opacity:0;transform:translateY(-8px);transition:opacity .25s,transform .25s;pointer-events:none}
 .top:hover .top-bar,.top:focus-within .top-bar,.top.is-open .top-bar{opacity:1;transform:none;pointer-events:auto}
@@ -27,21 +21,14 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 .top a{text-decoration:none}
 .top a:hover{text-decoration:underline;text-underline-offset:.3em}
 .menu{position:absolute;display:none;place-items:center;right:1rem;top:.6rem;width:2.35rem;height:2.35rem;z-index:1;cursor:pointer;border:1px solid;border-radius:50%}
-.hint{position:absolute;left:50%;bottom:max(1.4rem,env(safe-area-inset-bottom));translate:-50% 0;display:inline-flex;align-items:center;gap:.75rem;min-height:2.75rem;padding:.55rem 1rem;border:1px solid #f3e5ff35;border-radius:2rem;background:#1e113c54;color:#f0e4f4;font-size:.8rem;letter-spacing:.08em;text-decoration:none;white-space:nowrap;transition:background .25s,transform .25s}
-.hint:hover,.hint:focus-visible{background:#241447a0;transform:translateY(-2px)}
-.lens{position:absolute;top:50%;left:61%;width:clamp(7rem,26vw,24rem);aspect-ratio:1;translate:-50% -50%;border-radius:50%;border:1px solid #fff9;box-shadow:inset 0 0 40px #ffd4ef82,0 20px 60px #20082c60;backdrop-filter:hue-rotate(23deg) brightness(1.17);pointer-events:none}
-@media (max-width:620px){.caption{top:4rem}.top-bar{padding-right:3.25rem}.wordmark{font-size:.58rem}}
+@media (max-width:620px){.top-bar{padding-right:3.25rem}.wordmark{font-size:.58rem}}
 @media (hover:none){.menu{display:grid}.top-bar{padding-right:3.25rem}.top:not(.is-open) .top-bar{visibility:hidden}}
-@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.overlay,.hint,.top-bar{transition:none}}
-/* Tinted type and glass pick up their colours from the artwork. */
-.screen{--title:#e4d5ef;--label:#d2bddf;--type-shadow:#33203f80}
-.caption{color:var(--title);text-shadow:0 1px 12px var(--type-shadow)}
-.caption small{color:var(--label);font-weight:500;letter-spacing:.22em}
-.caption h1,.caption h2{font-weight:400;line-height:1.04;letter-spacing:.012em}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}.top-bar{transition:none}}
 .top-bar{color:#ddd0e6;background:#261d37a3;border-color:#e5d5ee28;backdrop-filter:blur(14px)}
 .menu{color:#ddd0e6;background:#261d3766;border-color:#e5d5ee36}
 </style>
 <link rel="stylesheet" href="gallery.css">
+<link rel="stylesheet" href="experience.css">
 </head>
 <body>
 <header class="top">
@@ -49,10 +36,16 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 <div class="top-bar" id="site-nav"><a href="#home" class="wordmark">Closer Look</a><nav aria-label="Main"><a href="#images">Images</a><a href="#video">Video</a></nav></div>
 </header>
 <main>
-<section class="screen home is-revealed" id="home" aria-labelledby="home-title">
-<div class="lens" aria-hidden="true"></div>
-<div class="caption overlay"><small>Image &amp; motion</small><h1 id="home-title">Closer Look</h1></div>
-<a class="hint" href="#images">View work <span aria-hidden="true">↓</span></a>
+<section class="screen home" id="home" aria-labelledby="home-title">
+<div class="home-art" aria-hidden="true"><img data-src="gallery-media/landscape-02.jpg" alt="" hidden></div>
+<div class="home-copy">
+<p class="home-name">Fabio / Selected work</p>
+<h1 id="home-title">Photography<br>&amp; Film</h1>
+<nav class="home-links" aria-label="Explore the portfolio">
+<a href="#images">Photographs <span aria-hidden="true">↓</span></a>
+<a href="#video">RestCue <span aria-hidden="true">↗</span></a>
+</nav>
+</div>
 </section>
 <section class="screen images" id="images" aria-labelledby="images-title">
 <h2 class="sr-only" id="images-title">Photography series</h2>
@@ -60,23 +53,21 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 <noscript>Enable JavaScript to browse the photography series.</noscript>
 </section>
 <section class="screen motion" id="video" aria-labelledby="video-title">
-<div class="motion-work">
-<div class="motion-copy">
-<p class="motion-kicker">Motion / 01</p>
-<h2 id="video-title">Passing Light</h2>
-<p>A quiet passage from ridge to harbour to park, made from photographs in the collection.</p>
-</div>
-<div class="motion-frame">
-<video id="motion-film" controls playsinline preload="metadata" aria-label="Passing Light, a silent motion study" data-src="gallery-media/passing-light.mp4" data-poster="gallery-media/passing-light.jpg" hidden></video>
-<div class="motion-placeholder" aria-hidden="true"></div>
-</div>
-</div>
+<button class="film-card" type="button" aria-label="Play RestCue" aria-haspopup="dialog" aria-controls="film-player" disabled>
+<img class="film-still" data-src="gallery-media/restcue-still.jpg" alt="" hidden>
+<span class="film-play" aria-hidden="true">▶</span>
+<span class="film-caption"><span class="film-kicker">Film / 01</span><span id="video-title">RestCue</span><span class="film-watch">Watch film ↗</span></span>
+</button>
 <footer class="author">
-<div><strong>Fabio</strong><span>Photography &amp; Motion</span></div>
+<div><strong>Fabio</strong><span>Photography &amp; Film</span></div>
 <a href="https://github.com/ljl3239960284">GitHub ↗</a>
 </footer>
 </section>
 </main>
+<dialog class="film-player" id="film-player" aria-label="RestCue film">
+<header class="film-player-bar"><a class="film-external" target="_blank" rel="noopener">Open on YouTube ↗</a><form method="dialog"><button type="submit" aria-label="Close RestCue" autofocus>×</button></form></header>
+<div class="film-embed"></div>
+</dialog>
 <dialog id="series" class="series" aria-labelledby="series-title">
 <header class="series-bar">
 <h2 id="series-title"></h2>
@@ -103,37 +94,8 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 </template>
 <script src="photo-mode.js" defer></script>
 <script src="gallery.js" defer></script>
+<script src="experience.js" defer></script>
 <script>
-const screens = document.querySelectorAll('.home');
-const timers = new Map();
-
-function reveal(screen) {
-  clearTimeout(timers.get(screen));
-  screen.classList.add('is-revealed');
-  timers.set(screen, setTimeout(() => {
-    screen.classList.remove('is-revealed');
-    timers.delete(screen);
-  }, 2800));
-}
-
-const observer = new IntersectionObserver(entries => {
-  for (const entry of entries) {
-    if (entry.isIntersecting) reveal(entry.target);
-    else {
-      clearTimeout(timers.get(entry.target));
-      timers.delete(entry.target);
-      entry.target.classList.remove('is-revealed');
-    }
-  }
-}, { threshold: .65 });
-
-screens.forEach(screen => {
-  observer.observe(screen);
-  screen.addEventListener('click', event => {
-    if (matchMedia('(hover: none)').matches && !event.target.closest('a, button')) reveal(screen);
-  });
-});
-
 const topbar = document.querySelector('.top');
 const menu = topbar.querySelector('.menu');
 function setMenu(open) {

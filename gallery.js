@@ -16,13 +16,6 @@ const previousPhoto = gallery.querySelector('.series-previous');
 const nextPhoto = gallery.querySelector('.series-next');
 const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const hasPhotos = window.portfolioHasPhotos === true;
-const film = document.querySelector('#motion-film');
-if (hasPhotos && film) {
-  film.poster = film.dataset.poster;
-  film.src = film.dataset.src;
-  film.hidden = false;
-  document.querySelector('.motion-placeholder').hidden = true;
-}
 let previewed = null;
 let openedFrom = null;
 let currentPhoto = 0;

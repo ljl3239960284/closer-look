@@ -1,6 +1,6 @@
 # Closer Look
 
-A fullscreen photography and motion portfolio built with HTML, CSS and JavaScript.
+A fullscreen photography and film portfolio built with HTML, CSS and JavaScript.
 
 ![Five numbered photography bookmarks in the desktop gallery](docs/bookmarks.jpg)
 
@@ -8,6 +8,8 @@ The desktop gallery uses tall covers that reveal on hover or keyboard focus. Eac
 
 Inside each series, use the arrows or scroll to move through the photographs. The page counter follows your position, and closing the gallery returns focus to the bookmark. The interface respects reduced-motion preferences.
 
-Open [index.html](index.html) in a browser to run the gallery. The public demo uses abstract covers and a motion poster. No dependencies or build step are required.
+The opening page reveals a photograph and gives direct routes to the photography and film. Its pointer movement and opening animation respect reduced-motion preferences. The film opens from its still into a YouTube dialog. Closing the dialog unloads the player and returns focus to the still.
 
-The gradient and lens concept draws inspiration from [Purrweb's portfolio study](https://dribbble.com/shots/19871911-Landing-Designer-portfolio).
+Open [index.html](index.html) in a browser to run the gallery. The public demo uses abstract covers. Private media and the film URL are configured separately in photo-mode.js. No dependencies or build step are required.
+
+The early gradient and lens exploration drew inspiration from [Purrweb's portfolio study](https://dribbble.com/shots/19871911-Landing-Designer-portfolio).
