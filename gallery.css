@@ -263,7 +263,6 @@ html:has(.series[open]) { overflow: hidden; }
   .screen.images {
     height: auto;
     min-height: 100svh;
-    scroll-snap-stop: normal;
   }
   .bookmarks {
     grid-auto-flow: row;

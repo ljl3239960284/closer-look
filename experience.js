@@ -1,4 +1,36 @@
 const signature = document.querySelector('.signature');
+const screens = [...document.querySelectorAll('main > .screen')];
+const desktopWheel = matchMedia('(min-width: 701px) and (hover: hover) and (pointer: fine)');
+const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)');
+let lastPageWheel = -Infinity;
+let wheelTransitionUntil = 0;
+
+window.addEventListener('wheel', event => {
+  if (!desktopWheel.matches || !event.cancelable || event.defaultPrevented
+      || event.ctrlKey || event.metaKey || event.shiftKey
+      || Math.abs(event.deltaY) <= Math.abs(event.deltaX)
+      || document.querySelector('dialog[open]')) return;
+
+  const now = performance.now();
+  const sameGesture = now - lastPageWheel < 180;
+  if (sameGesture || now < wheelTransitionUntil) {
+    lastPageWheel = now;
+    event.preventDefault();
+    return;
+  }
+
+  const direction = Math.sign(event.deltaY);
+  const next = direction > 0
+    ? screens.find(screen => screen.getBoundingClientRect().top > 2)
+    : screens.findLast(screen => screen.getBoundingClientRect().top < -2);
+  if (!next) return;
+
+  event.preventDefault();
+  lastPageWheel = now;
+  wheelTransitionUntil = now + (reducedMotion.matches ? 0 : 500);
+  next.scrollIntoView({ behavior: reducedMotion.matches ? 'instant' : 'smooth', block: 'start' });
+}, { passive: false });
+
 const experienceObserver = new IntersectionObserver(entries => {
   for (const entry of entries) {
     entry.target.classList.toggle('is-in-view', entry.isIntersecting);
