@@ -8,7 +8,7 @@
 <style>
 :root{color-scheme:dark;--ink:#fff9f0;--ease:cubic-bezier(.22,.65,.25,1)}
 *{box-sizing:border-box}
-html{scroll-snap-type:y mandatory;scroll-behavior:smooth;background:#211438}
+html{scroll-snap-type:y proximity;scroll-behavior:smooth;background:#211438}
 body{margin:0;color:var(--ink);font:400 16px/1.4 system-ui,sans-serif}
 button,a{color:inherit}
 a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
@@ -49,9 +49,9 @@ a:focus-visible,button:focus-visible{outline:2px solid white;outline-offset:5px}
 <div class="signature-strip signature-strip-bottom" data-frames="architecture-03:720:480 monochrome-03:720:450 landscape-01:720:405 action-05:720:480 others-02:720:480 abstraction-01:480:720 portrait-02:720:427 abstraction-02:720:720" aria-hidden="true"></div>
 <button class="signature-toggle" type="button" aria-pressed="false" aria-label="Pause photo strips">Ⅱ</button>
 </section>
-<section class="screen home" id="home" aria-label="Mountain landscape">
-<div class="home-art"><img data-src="gallery-media/landscape-02.jpg" alt="A green mountain ridge beneath a line of clouds" hidden></div>
-</section>
+<div class="landscape-transition" id="home" aria-hidden="true">
+<div class="landscape-frame"><img data-src="gallery-media/landscape-02.jpg" alt="" hidden></div>
+</div>
 <section class="screen images" id="images" aria-labelledby="images-title">
 <h2 class="sr-only" id="images-title">Photography series</h2>
 <div class="bookmarks" aria-label="Photography series"></div>

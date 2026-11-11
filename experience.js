@@ -1,4 +1,4 @@
-const opening = document.querySelector('.home');
+const landscape = document.querySelector('.landscape-transition');
 const signature = document.querySelector('.signature');
 const reduceExperienceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const experienceObserver = new IntersectionObserver(entries => {
@@ -6,7 +6,6 @@ const experienceObserver = new IntersectionObserver(entries => {
     entry.target.classList.toggle('is-in-view', entry.isIntersecting);
   }
 }, { threshold: .55 });
-experienceObserver.observe(opening);
 experienceObserver.observe(document.querySelector('.motion'));
 experienceObserver.observe(signature);
 
@@ -57,25 +56,30 @@ stripToggle.addEventListener('click', () => {
 });
 
 if (window.portfolioHasPhotos === true) {
-  for (const image of document.querySelectorAll('.home-art img, .film-still')) {
+  for (const image of document.querySelectorAll('.landscape-frame img, .film-still')) {
     image.addEventListener('error', () => { image.hidden = true; }, { once: true });
     image.src = image.dataset.src;
     image.hidden = false;
   }
 }
 
-opening.addEventListener('pointermove', event => {
-  if (event.pointerType !== 'mouse' || reduceExperienceMotion.matches) return;
-  const frame = opening.getBoundingClientRect();
-  const x = ((event.clientX - frame.left) / frame.width - .5) * 12;
-  const y = ((event.clientY - frame.top) / frame.height - .5) * 12;
-  opening.style.setProperty('--photo-x', x.toFixed(2) + 'px');
-  opening.style.setProperty('--photo-y', y.toFixed(2) + 'px');
-});
-opening.addEventListener('pointerleave', () => {
-  opening.style.setProperty('--photo-x', '0px');
-  opening.style.setProperty('--photo-y', '0px');
-});
+let landscapeFramePending = false;
+function scheduleLandscapeReveal() {
+  if (landscapeFramePending || reduceExperienceMotion.matches) return;
+  landscapeFramePending = true;
+  requestAnimationFrame(() => {
+    landscapeFramePending = false;
+    const { top, bottom, height } = landscape.getBoundingClientRect();
+    if (bottom < 0 || top > window.innerHeight) return;
+    const progress = Math.min(1, (window.innerHeight - top) / height);
+    landscape.style.setProperty('--landscape-inset', (1 - progress) * 12 + '%');
+    landscape.style.setProperty('--landscape-scale', 1.12 - progress * .12);
+  });
+}
+window.addEventListener('scroll', scheduleLandscapeReveal, { passive: true });
+window.addEventListener('resize', scheduleLandscapeReveal);
+reduceExperienceMotion.addEventListener('change', scheduleLandscapeReveal);
+scheduleLandscapeReveal();
 
 const filmCard = document.querySelector('.film-card');
 const filmPlayer = document.querySelector('#film-player');

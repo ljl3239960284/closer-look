@@ -260,7 +260,6 @@ html:has(.series[open]) { overflow: hidden; }
 .author a:hover { text-decoration: underline; text-underline-offset: .25em; }
 
 @media (max-width: 700px), (hover: none) and (orientation: portrait) {
-  html { scroll-snap-type: y proximity; }
   .screen.images {
     height: auto;
     min-height: 100svh;

@@ -100,35 +100,38 @@
 }
 .signature-toggle:hover { background: #51463b13; }
 
-.home {
-  --photo-x: 0px;
-  --photo-y: 0px;
-  background: #252b30;
-  color: #e6e3dd;
+.landscape-transition {
+  position: relative;
+  height: clamp(12rem, 48svh, 34rem);
+  overflow: hidden;
+  background: linear-gradient(#e7e2d9 0%, #444148 76%, #4d4951 100%);
 }
-.home-art {
+.landscape-frame {
   position: absolute;
   inset: 0;
-  background: radial-gradient(ellipse at 65% 34%, #777e7e, transparent 66%), linear-gradient(140deg, #253237, #4e5257);
+  overflow: hidden;
+  clip-path: inset(0 var(--landscape-inset, 0%));
+  background: linear-gradient(140deg, #68736f, #252b30);
 }
-.home-art img {
+.landscape-frame img {
   display: block;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: 58% 46%;
-  transform: translate(var(--photo-x), var(--photo-y)) scale(1.035);
-  transition: transform .7s var(--ease);
+  object-position: 58% 45%;
+  transform: scale(var(--landscape-scale, 1));
 }
-.home-art [hidden] { display: none; }
-.home.is-in-view .home-art { animation: frame-open 1.15s var(--ease) both; }
+.landscape-frame [hidden] { display: none; }
+.landscape-transition::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(transparent 64%, #4d4951);
+}
 @keyframes frame-open {
   from { clip-path: inset(44% 0); filter: blur(12px); }
   to { clip-path: inset(0); filter: blur(0); }
-}
-@keyframes title-in {
-  from { opacity: 0; transform: translateY(1.2rem); }
-  to { opacity: 1; transform: none; }
 }
 .screen.motion { background: #27242b; color: #e4dfd9; }
 .film-card {
@@ -227,12 +230,15 @@ html:has(.film-player[open]) { overflow: hidden; }
   .signature-strip { height: min(100%, clamp(3.25rem, 11.5svh, 6rem)); }
   .signature-copy h1 { font-size: clamp(2.8rem, 13vw, 5.5rem); }
   .signature-tile { padding-right: 5px; }
-  .home-art img { object-position: 60% center; }
+  .landscape-transition { height: clamp(10rem, 36svh, 21rem); }
+  .landscape-frame img { object-position: 60% 45%; }
   .film-caption { bottom: 20%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .signature-track { animation: none; }
   .signature-toggle { display: none; }
-  .home.is-in-view .home-art, .motion.is-in-view .film-still { animation: none; }
-  .home-art img, .film-still, .film-play { transition: none; }
+  .landscape-frame { clip-path: none; }
+  .landscape-frame img { transform: none; }
+  .motion.is-in-view .film-still { animation: none; }
+  .film-still, .film-play { transition: none; }
 }
