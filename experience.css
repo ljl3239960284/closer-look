@@ -100,35 +100,6 @@
 }
 .signature-toggle:hover { background: #51463b13; }
 
-.landscape-transition {
-  position: relative;
-  height: clamp(12rem, 48svh, 34rem);
-  overflow: hidden;
-  background: linear-gradient(#e7e2d9 0%, #444148 76%, #4d4951 100%);
-}
-.landscape-frame {
-  position: absolute;
-  inset: 0;
-  overflow: hidden;
-  clip-path: inset(0 var(--landscape-inset, 0%));
-  background: linear-gradient(140deg, #68736f, #252b30);
-}
-.landscape-frame img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: 58% 45%;
-  transform: scale(var(--landscape-scale, 1));
-}
-.landscape-frame [hidden] { display: none; }
-.landscape-transition::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(transparent 64%, #4d4951);
-}
 @keyframes frame-open {
   from { clip-path: inset(44% 0); filter: blur(12px); }
   to { clip-path: inset(0); filter: blur(0); }
@@ -230,15 +201,11 @@ html:has(.film-player[open]) { overflow: hidden; }
   .signature-strip { height: min(100%, clamp(3.25rem, 11.5svh, 6rem)); }
   .signature-copy h1 { font-size: clamp(2.8rem, 13vw, 5.5rem); }
   .signature-tile { padding-right: 5px; }
-  .landscape-transition { height: clamp(10rem, 36svh, 21rem); }
-  .landscape-frame img { object-position: 60% 45%; }
   .film-caption { bottom: 20%; }
 }
 @media (prefers-reduced-motion: reduce) {
   .signature-track { animation: none; }
   .signature-toggle { display: none; }
-  .landscape-frame { clip-path: none; }
-  .landscape-frame img { transform: none; }
   .motion.is-in-view .film-still { animation: none; }
   .film-still, .film-play { transition: none; }
 }

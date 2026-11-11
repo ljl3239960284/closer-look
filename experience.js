@@ -1,6 +1,4 @@
-const landscape = document.querySelector('.landscape-transition');
 const signature = document.querySelector('.signature');
-const reduceExperienceMotion = matchMedia('(prefers-reduced-motion: reduce)');
 const experienceObserver = new IntersectionObserver(entries => {
   for (const entry of entries) {
     entry.target.classList.toggle('is-in-view', entry.isIntersecting);
@@ -56,30 +54,11 @@ stripToggle.addEventListener('click', () => {
 });
 
 if (window.portfolioHasPhotos === true) {
-  for (const image of document.querySelectorAll('.landscape-frame img, .film-still')) {
-    image.addEventListener('error', () => { image.hidden = true; }, { once: true });
-    image.src = image.dataset.src;
-    image.hidden = false;
-  }
+  const image = document.querySelector('.film-still');
+  image.addEventListener('error', () => { image.hidden = true; }, { once: true });
+  image.src = image.dataset.src;
+  image.hidden = false;
 }
-
-let landscapeFramePending = false;
-function scheduleLandscapeReveal() {
-  if (landscapeFramePending || reduceExperienceMotion.matches) return;
-  landscapeFramePending = true;
-  requestAnimationFrame(() => {
-    landscapeFramePending = false;
-    const { top, bottom, height } = landscape.getBoundingClientRect();
-    if (bottom < 0 || top > window.innerHeight) return;
-    const progress = Math.min(1, (window.innerHeight - top) / height);
-    landscape.style.setProperty('--landscape-inset', (1 - progress) * 12 + '%');
-    landscape.style.setProperty('--landscape-scale', 1.12 - progress * .12);
-  });
-}
-window.addEventListener('scroll', scheduleLandscapeReveal, { passive: true });
-window.addEventListener('resize', scheduleLandscapeReveal);
-reduceExperienceMotion.addEventListener('change', scheduleLandscapeReveal);
-scheduleLandscapeReveal();
 
 const filmCard = document.querySelector('.film-card');
 const filmPlayer = document.querySelector('#film-player');
