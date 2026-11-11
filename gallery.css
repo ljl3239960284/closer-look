@@ -262,20 +262,20 @@ html:has(.series[open]) { overflow: hidden; }
 @media (max-width: 700px), (hover: none) and (orientation: portrait) {
   html { scroll-snap-type: y proximity; }
   .screen.images {
-    grid-template-rows: minmax(0, 1fr);
-    padding-block: env(safe-area-inset-top) env(safe-area-inset-bottom);
+    height: auto;
+    min-height: 100svh;
+    scroll-snap-stop: normal;
   }
   .bookmarks {
     grid-auto-flow: row;
     grid-auto-columns: auto;
-    grid-auto-rows: minmax(0, 1fr);
-    overflow: hidden;
+    grid-auto-rows: clamp(9.25rem, 39vw, 13rem);
+    overflow: visible;
     scroll-snap-type: none;
   }
   .bookmark {
     --edge: clamp(.85rem, 5vw, 2.5rem);
     border-inline-end: 0;
-    border-block-end: 1px solid #eee7f025;
   }
   .bookmark.landscape { --mobile-cover-focus: 50% 45%; }
   .bookmark.architecture { --mobile-cover-focus: 50% 25%; }
